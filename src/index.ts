@@ -9,3 +9,4 @@ export type { FusionRankErrorCode } from './errors';
 export { deduplicateResults } from './dedup';
 export type { DeduplicatedDoc } from './dedup';
 export { normalize, minMaxNormalize, zScoreNormalize, rankBasedNormalize } from './normalization/index';
+export { computeScore, rrfScore } from './strategies/index';
