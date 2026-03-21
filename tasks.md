@@ -41,11 +41,11 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 ## Phase 3: Score Normalization
 
-- [ ] **Create normalization dispatcher** — Create `src/normalization/index.ts` that accepts a `NormalizationMethod` and delegates to the correct normalizer. Export a `normalize(scores: number[], method: NormalizationMethod): number[]` function. | Status: not_done
-- [ ] **Implement min-max normalization** — Create `src/normalization/min-max.ts`. Formula: `(x - min) / (max - min)`. Edge case: when all scores are identical (`max === min`), return 0.5 for all items. | Status: not_done
-- [ ] **Implement z-score normalization** — Create `src/normalization/z-score.ts`. Formula: `(x - mean) / stddev`. Edge case: when all scores are identical (`stddev === 0`), return 0 for all items. | Status: not_done
-- [ ] **Implement rank-based normalization** — Create `src/normalization/rank-based.ts`. Formula: `1 - (rank - 1) / (N - 1)`. Edge case: when list has only one item (`N === 1`), return 1.0. | Status: not_done
-- [ ] **Implement no-normalization passthrough** — In the normalization dispatcher, when method is `'none'`, return raw scores unchanged. | Status: not_done
+- [x] **Create normalization dispatcher** — Create `src/normalization/index.ts` that accepts a `NormalizationMethod` and delegates to the correct normalizer. Export a `normalize(scores: number[], method: NormalizationMethod): number[]` function. | Status: done
+- [x] **Implement min-max normalization** — Create `src/normalization/min-max.ts`. Formula: `(x - min) / (max - min)`. Edge case: when all scores are identical (`max === min`), return 0.5 for all items. | Status: done
+- [x] **Implement z-score normalization** — Create `src/normalization/z-score.ts`. Formula: `(x - mean) / stddev`. Edge case: when all scores are identical (`stddev === 0`), return 0 for all items. | Status: done
+- [x] **Implement rank-based normalization** — Create `src/normalization/rank-based.ts`. Formula: `1 - (rank - 1) / (N - 1)`. Edge case: when list has only one item (`N === 1`), return 1.0. | Status: done
+- [x] **Implement no-normalization passthrough** — In the normalization dispatcher, when method is `'none'`, return raw scores unchanged. | Status: done
 
 ---
 
