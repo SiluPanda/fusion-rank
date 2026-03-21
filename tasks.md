@@ -6,36 +6,36 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 ## Phase 1: Project Scaffolding and Types
 
-- [ ] **Install dev dependencies** — Add `typescript`, `vitest`, `eslint`, and `@types/node` as devDependencies in package.json. Verify `npm install` succeeds. | Status: not_done
-- [ ] **Add CLI binary entry to package.json** — Add `"bin": { "fusion-rank": "dist/cli.js" }` to package.json so the CLI is registered on install. | Status: not_done
-- [ ] **Define RankedItem interface** — Create `src/types.ts` with the `RankedItem` interface: `id: string`, `score?: number`, `rank?: number`, `metadata?: Record<string, unknown>`. | Status: not_done
-- [ ] **Define FusedResult interface** — In `src/types.ts`, define `FusedResult` with fields: `id: string`, `score: number`, `rank: number`, `sources: SourceAppearance[]`, `metadata?: Record<string, unknown>`. | Status: not_done
-- [ ] **Define SourceAppearance interface** — In `src/types.ts`, define `SourceAppearance` with fields: `listIndex: number`, `rank: number`, `score?: number`, `normalizedScore?: number`. | Status: not_done
-- [ ] **Define FusionStrategy type** — In `src/types.ts`, define the union type: `'rrf' | 'weighted' | 'combsum' | 'combmnz' | 'borda' | 'custom'`. | Status: not_done
-- [ ] **Define NormalizationMethod type** — In `src/types.ts`, define: `'min-max' | 'z-score' | 'rank-based' | 'none'`. | Status: not_done
-- [ ] **Define MissingDocStrategy type** — In `src/types.ts`, define: `'worst-rank' | 'skip' | 'default-score'`. | Status: not_done
-- [ ] **Define MetadataMerge type** — In `src/types.ts`, define: `'first' | 'deep' | 'all'`. | Status: not_done
-- [ ] **Define FuseOptions interface** — In `src/types.ts`, define the full options interface with all fields: `strategy`, `k`, `weights`, `normalization`, `missingDocStrategy`, `defaultScore`, `normalizeOutput`, `topK`, `idField`, `metadataMerge`, `customFusion`. Include defaults in JSDoc. | Status: not_done
-- [ ] **Define RRFOptions interface** — In `src/types.ts`, define `RRFOptions` extending `Omit<FuseOptions, 'strategy' | 'weights' | 'normalization'>` with `k?: number`. | Status: not_done
-- [ ] **Define WeightedFuseOptions interface** — In `src/types.ts`, define `WeightedFuseOptions` extending `Omit<FuseOptions, 'strategy' | 'weights'>` with `normalization?: NormalizationMethod`. | Status: not_done
-- [ ] **Define FuserConfig type** — In `src/types.ts`, define `FuserConfig` as `FuseOptions`. | Status: not_done
-- [ ] **Define Fuser interface** — In `src/types.ts`, define the `Fuser` interface with `fuse(resultLists: RankedItem[][], overrides?: Partial<FuseOptions>): FusedResult[]`. | Status: not_done
-- [ ] **Define CustomFusionFn type** — In `src/types.ts`, define the custom fusion function signature: `(docId: string, appearances: {...}[], context: FusionContext) => number`. | Status: not_done
-- [ ] **Define FusionContext interface** — In `src/types.ts`, define `FusionContext` with `totalLists: number`, `listLengths: number[]`, `options: FuseOptions`. | Status: not_done
-- [ ] **Define FusionRankError class** — Create `src/errors.ts` with `FusionRankError extends Error` including a `readonly code: FusionRankErrorCode` property. | Status: not_done
-- [ ] **Define FusionRankErrorCode type** — In `src/errors.ts`, define the error code union: `'TOO_FEW_LISTS' | 'EMPTY_LIST' | 'MISSING_SCORES' | 'WEIGHT_LENGTH_MISMATCH' | 'INVALID_K' | 'INVALID_WEIGHTS' | 'MISSING_CUSTOM_FN' | 'INVALID_OPTIONS'`. | Status: not_done
-- [ ] **Verify types compile** — Run `npx tsc --noEmit` to ensure all type definitions compile without errors. | Status: not_done
+- [x] **Install dev dependencies** — Add `typescript`, `vitest`, `eslint`, and `@types/node` as devDependencies in package.json. Verify `npm install` succeeds. | Status: done
+- [x] **Add CLI binary entry to package.json** — Add `"bin": { "fusion-rank": "dist/cli.js" }` to package.json so the CLI is registered on install. | Status: done
+- [x] **Define RankedItem interface** — Create `src/types.ts` with the `RankedItem` interface: `id: string`, `score?: number`, `rank?: number`, `metadata?: Record<string, unknown>`. | Status: done
+- [x] **Define FusedResult interface** — In `src/types.ts`, define `FusedResult` with fields: `id: string`, `score: number`, `rank: number`, `sources: SourceAppearance[]`, `metadata?: Record<string, unknown>`. | Status: done
+- [x] **Define SourceAppearance interface** — In `src/types.ts`, define `SourceAppearance` with fields: `listIndex: number`, `rank: number`, `score?: number`, `normalizedScore?: number`. | Status: done
+- [x] **Define FusionStrategy type** — In `src/types.ts`, define the union type: `'rrf' | 'weighted' | 'combsum' | 'combmnz' | 'borda' | 'custom'`. | Status: done
+- [x] **Define NormalizationMethod type** — In `src/types.ts`, define: `'min-max' | 'z-score' | 'rank-based' | 'none'`. | Status: done
+- [x] **Define MissingDocStrategy type** — In `src/types.ts`, define: `'worst-rank' | 'skip' | 'default-score'`. | Status: done
+- [x] **Define MetadataMerge type** — In `src/types.ts`, define: `'first' | 'deep' | 'all'`. | Status: done
+- [x] **Define FuseOptions interface** — In `src/types.ts`, define the full options interface with all fields: `strategy`, `k`, `weights`, `normalization`, `missingDocStrategy`, `defaultScore`, `normalizeOutput`, `topK`, `idField`, `metadataMerge`, `customFusion`. Include defaults in JSDoc. | Status: done
+- [x] **Define RRFOptions interface** — In `src/types.ts`, define `RRFOptions` extending `Omit<FuseOptions, 'strategy' | 'weights' | 'normalization'>` with `k?: number`. | Status: done
+- [x] **Define WeightedFuseOptions interface** — In `src/types.ts`, define `WeightedFuseOptions` extending `Omit<FuseOptions, 'strategy' | 'weights'>` with `normalization?: NormalizationMethod`. | Status: done
+- [x] **Define FuserConfig type** — In `src/types.ts`, define `FuserConfig` as `FuseOptions`. | Status: done
+- [x] **Define Fuser interface** — In `src/types.ts`, define the `Fuser` interface with `fuse(resultLists: RankedItem[][], overrides?: Partial<FuseOptions>): FusedResult[]`. | Status: done
+- [x] **Define CustomFusionFn type** — In `src/types.ts`, define the custom fusion function signature: `(docId: string, appearances: {...}[], context: FusionContext) => number`. | Status: done
+- [x] **Define FusionContext interface** — In `src/types.ts`, define `FusionContext` with `totalLists: number`, `listLengths: number[]`, `options: FuseOptions`. | Status: done
+- [x] **Define FusionRankError class** — Create `src/errors.ts` with `FusionRankError extends Error` including a `readonly code: FusionRankErrorCode` property. | Status: done
+- [x] **Define FusionRankErrorCode type** — In `src/errors.ts`, define the error code union: `'TOO_FEW_LISTS' | 'EMPTY_LIST' | 'MISSING_SCORES' | 'WEIGHT_LENGTH_MISMATCH' | 'INVALID_K' | 'INVALID_WEIGHTS' | 'MISSING_CUSTOM_FN' | 'INVALID_OPTIONS'`. | Status: done
+- [x] **Verify types compile** — Run `npx tsc --noEmit` to ensure all type definitions compile without errors. | Status: done
 
 ---
 
 ## Phase 2: Deduplication and Provenance
 
-- [ ] **Implement deduplication by document ID** — Create `src/dedup.ts`. Given multiple `RankedItem[][]`, group items by their `id` field into a `Map<string, { appearances: SourceAppearance[], metadataEntries: Record<string, unknown>[] }>`. Assign ranks to items without explicit `rank` (rank = array position + 1). | Status: not_done
-- [ ] **Implement configurable idField** — In `src/dedup.ts`, support a configurable `idField` option. When set, use `item[idField]` instead of `item.id` as the deduplication key. Throw a meaningful error if an item lacks the specified field. | Status: not_done
-- [ ] **Implement metadata merge strategy: first** — In `src/dedup.ts`, when `metadataMerge` is `'first'` (default), use the metadata from the first appearance of a document across input lists (in input order). | Status: not_done
-- [ ] **Implement metadata merge strategy: deep** — In `src/dedup.ts`, when `metadataMerge` is `'deep'`, deep-merge metadata objects from all appearances. Later values override earlier values for the same nested key. | Status: not_done
-- [ ] **Implement metadata merge strategy: all** — In `src/dedup.ts`, when `metadataMerge` is `'all'`, store an array of all metadata objects from all appearances in the `metadata` field. | Status: not_done
-- [ ] **Implement provenance tracking** — Create `src/provenance.ts`. For each unique document, build a `sources: SourceAppearance[]` array recording each list that contained the document, with `listIndex`, `rank`, `score`, and `normalizedScore`. | Status: not_done
+- [x] **Implement deduplication by document ID** — Create `src/dedup.ts`. Given multiple `RankedItem[][]`, group items by their `id` field into a `Map<string, { appearances: SourceAppearance[], metadataEntries: Record<string, unknown>[] }>`. Assign ranks to items without explicit `rank` (rank = array position + 1). | Status: done
+- [x] **Implement configurable idField** — In `src/dedup.ts`, support a configurable `idField` option. When set, use `item[idField]` instead of `item.id` as the deduplication key. Throw a meaningful error if an item lacks the specified field. | Status: done
+- [x] **Implement metadata merge strategy: first** — In `src/dedup.ts`, when `metadataMerge` is `'first'` (default), use the metadata from the first appearance of a document across input lists (in input order). | Status: done
+- [x] **Implement metadata merge strategy: deep** — In `src/dedup.ts`, when `metadataMerge` is `'deep'`, deep-merge metadata objects from all appearances. Later values override earlier values for the same nested key. | Status: done
+- [x] **Implement metadata merge strategy: all** — In `src/dedup.ts`, when `metadataMerge` is `'all'`, store an array of all metadata objects from all appearances in the `metadata` field. | Status: done
+- [x] **Implement provenance tracking** — Create `src/provenance.ts`. For each unique document, build a `sources: SourceAppearance[]` array recording each list that contained the document, with `listIndex`, `rank`, `score`, and `normalizedScore`. | Status: done
 
 ---
 
