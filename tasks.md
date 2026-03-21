@@ -51,8 +51,8 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 ## Phase 4: Fusion Strategies
 
-- [ ] **Create strategy dispatcher** — Create `src/strategies/index.ts` that accepts a `FusionStrategy` and delegates to the correct strategy implementation. | Status: not_done
-- [ ] **Implement RRF strategy** — Create `src/strategies/rrf.ts`. Formula: `RRF_score(d) = sum(1 / (k + rank_i(d)))`. Default k = 60. For missing documents with `'worst-rank'`, assign `rank = listLength + 1`. For `'skip'`, only sum over lists where the document appears. | Status: not_done
+- [x] **Create strategy dispatcher** — Create `src/strategies/index.ts` that accepts a `FusionStrategy` and delegates to the correct strategy implementation. | Status: done
+- [x] **Implement RRF strategy** — Create `src/strategies/rrf.ts`. Formula: `RRF_score(d) = sum(1 / (k + rank_i(d)))`. Default k = 60. For missing documents with `'worst-rank'`, assign `rank = listLength + 1`. For `'skip'`, only sum over lists where the document appears. | Status: done
 - [ ] **Implement weighted score fusion strategy** — Create `src/strategies/weighted.ts`. Formula: `fused_score(d) = sum(w_i * normalize(score_i(d)))`. Auto-normalize weights to sum to 1.0. For missing documents with `'default-score'`, use the configured default (default 0). For `'skip'`, renormalize remaining weights. For `'worst-rank'`, assign normalized score for `rank = listLength + 1`. | Status: not_done
 - [ ] **Implement CombSUM strategy** — Create `src/strategies/combsum.ts`. Formula: `CombSUM_score(d) = sum(normalize(score_i(d)))`. Equivalent to weighted fusion with equal weights. | Status: not_done
 - [ ] **Implement CombMNZ strategy** — Create `src/strategies/combmnz.ts`. Formula: `CombMNZ_score(d) = |lists containing d| * sum(normalize(score_i(d)))`. Multiply the score sum by the count of lists containing the document. | Status: not_done
