@@ -6,3 +6,5 @@ export type {
 } from './types';
 export { FusionRankError } from './errors';
 export type { FusionRankErrorCode } from './errors';
+export { deduplicateResults } from './dedup';
+export type { DeduplicatedDoc } from './dedup';
