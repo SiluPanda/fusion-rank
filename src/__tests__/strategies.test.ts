@@ -174,17 +174,83 @@ describe('computeScore', () => {
     expect(computeScore('rrf', doc, context)).toBeCloseTo(expected, 10);
   });
 
-  it('throws for unimplemented strategies', () => {
+  it('delegates to bordaScore for borda strategy', () => {
+    const doc = makeDoc('d1', [
+      { listIndex: 0, rank: 1 },
+      { listIndex: 1, rank: 3 },
+    ]);
+    const context: FusionContext = {
+      totalLists: 2,
+      listLengths: [5, 5],
+      options: { strategy: 'borda', missingDocStrategy: 'skip' },
+    };
+    // Borda: (5-1) + (5-3) = 4 + 2 = 6
+    expect(computeScore('borda', doc, context)).toBe(6);
+  });
+
+  it('delegates to combSumScore for combsum strategy', () => {
+    const doc = makeDoc('d1', [
+      { listIndex: 0, rank: 1 },
+      { listIndex: 1, rank: 2 },
+    ]);
+    doc.appearances[0].normalizedScore = 0.8;
+    doc.appearances[1].normalizedScore = 0.6;
+    const context: FusionContext = {
+      totalLists: 2,
+      listLengths: [5, 5],
+      options: {},
+    };
+    expect(computeScore('combsum', doc, context)).toBeCloseTo(1.4, 10);
+  });
+
+  it('delegates to combMnzScore for combmnz strategy', () => {
+    const doc = makeDoc('d1', [
+      { listIndex: 0, rank: 1 },
+      { listIndex: 1, rank: 2 },
+    ]);
+    doc.appearances[0].normalizedScore = 0.8;
+    doc.appearances[1].normalizedScore = 0.6;
+    const context: FusionContext = {
+      totalLists: 2,
+      listLengths: [5, 5],
+      options: {},
+    };
+    // CombMNZ: 2 * (0.8 + 0.6) = 2.8
+    expect(computeScore('combmnz', doc, context)).toBeCloseTo(2.8, 10);
+  });
+
+  it('delegates to weighted strategy (uses combSumScore)', () => {
+    const doc = makeDoc('d1', [
+      { listIndex: 0, rank: 1 },
+    ]);
+    doc.appearances[0].normalizedScore = 0.5;
+    const context: FusionContext = {
+      totalLists: 1,
+      listLengths: [5],
+      options: {},
+    };
+    expect(computeScore('weighted', doc, context)).toBeCloseTo(0.5, 10);
+  });
+
+  it('delegates to custom fusion function', () => {
+    const doc = makeDoc('d1', [{ listIndex: 0, rank: 1 }]);
+    const context: FusionContext = {
+      totalLists: 1,
+      listLengths: [5],
+      options: {
+        customFusion: (docId, appearances) => appearances.length * 42,
+      },
+    };
+    expect(computeScore('custom', doc, context)).toBe(42);
+  });
+
+  it('throws for custom strategy without customFusion function', () => {
     const doc = makeDoc('d1', [{ listIndex: 0, rank: 1 }]);
     const context: FusionContext = {
       totalLists: 1,
       listLengths: [5],
       options: {},
     };
-    expect(() => computeScore('weighted', doc, context)).toThrow('Strategy "weighted" not yet implemented');
-    expect(() => computeScore('combsum', doc, context)).toThrow('Strategy "combsum" not yet implemented');
-    expect(() => computeScore('combmnz', doc, context)).toThrow('Strategy "combmnz" not yet implemented');
-    expect(() => computeScore('borda', doc, context)).toThrow('Strategy "borda" not yet implemented');
-    expect(() => computeScore('custom', doc, context)).toThrow('Strategy "custom" not yet implemented');
+    expect(() => computeScore('custom', doc, context)).toThrow('Custom strategy requires customFusion function');
   });
 });
