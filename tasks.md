@@ -95,11 +95,11 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 ## Phase 8: Unit Tests — RRF
 
-- [ ] **Test RRF basic computation** — Verify RRF score for a document appearing in all lists matches the hand-computed formula: `sum(1/(k + rank))`. | Status: not_done
+- [x] **Test RRF basic computation** — Verify RRF score for a document appearing in all lists matches the hand-computed formula: `sum(1/(k + rank))`. | Status: done
 - [ ] **Test RRF with k = 0** — Verify k=0 produces pure reciprocal rank: `sum(1/rank)`. | Status: not_done
 - [ ] **Test RRF with large k (1000)** — Verify large k produces nearly equal scores for all ranked documents. | Status: not_done
-- [ ] **Test RRF missing document with worst-rank** — Verify absent document receives `rank = listLength + 1`. | Status: not_done
-- [ ] **Test RRF missing document with skip** — Verify absent document's fused score comes only from lists where it appears. | Status: not_done
+- [x] **Test RRF missing document with worst-rank** — Verify absent document receives `rank = listLength + 1`. | Status: done
+- [x] **Test RRF missing document with skip** — Verify absent document's fused score comes only from lists where it appears. | Status: done
 - [ ] **Test RRF worked example from spec** — Verify the exact scores and ranking from the worked example in Section 5 of the spec (doc-A = 0.03252, doc-C = 0.03226, etc.). | Status: not_done
 - [ ] **Test RRF ignores scores** — Verify that changing scores without changing ranks produces identical RRF output. | Status: not_done
 
@@ -108,10 +108,10 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 ## Phase 9: Unit Tests — Weighted Score Fusion
 
 - [ ] **Test weighted fusion with equal weights matches CombSUM** — Verify equal weights produce the same result as CombSUM. | Status: not_done
-- [ ] **Test weight auto-normalization** — Verify weights that don't sum to 1.0 (e.g., `[7, 3]`) are auto-normalized. | Status: not_done
-- [ ] **Test min-max normalization** — Verify highest score maps to 1.0 and lowest to 0.0. | Status: not_done
-- [ ] **Test z-score normalization** — Verify output has mean approximately 0 and stddev approximately 1. | Status: not_done
-- [ ] **Test rank-based normalization** — Verify rank 1 maps to 1.0 and last rank maps to 0.0. | Status: not_done
+- [x] **Test weight auto-normalization** — Verify weights that don't sum to 1.0 (e.g., `[7, 3]`) are auto-normalized. | Status: done
+- [x] **Test min-max normalization** — Verify highest score maps to 1.0 and lowest to 0.0. | Status: done
+- [x] **Test z-score normalization** — Verify output has mean approximately 0 and stddev approximately 1. | Status: done
+- [x] **Test rank-based normalization** — Verify rank 1 maps to 1.0 and last rank maps to 0.0. | Status: done
 - [ ] **Test missing document with default score 0** — Verify absent documents receive score 0 in weighted computation. | Status: not_done
 - [ ] **Test score-based strategy throws when items lack scores** — Verify `MISSING_SCORES` error when using weighted/combsum/combmnz on scoreless items. | Status: not_done
 
@@ -119,41 +119,41 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 ## Phase 10: Unit Tests — CombSUM, CombMNZ, Borda
 
-- [ ] **Test CombSUM equals sum of normalized scores** — Verify CombSUM output matches manual sum of min-max normalized scores. | Status: not_done
-- [ ] **Test CombSUM: document in all lists scores higher** — Verify a document present in all lists scores higher than one in a single list (given comparable raw scores). | Status: not_done
-- [ ] **Test CombMNZ equals CombSUM times count** — Verify CombMNZ = CombSUM_score * number_of_lists_containing_document. | Status: not_done
-- [ ] **Test CombMNZ multiplier** — Verify a document in 3/3 lists with sum S scores 3S, while a document in 1/3 lists with the same sum scores 1S. | Status: not_done
+- [x] **Test CombSUM equals sum of normalized scores** — Verify CombSUM output matches manual sum of min-max normalized scores. | Status: done
+- [x] **Test CombSUM: document in all lists scores higher** — Verify a document present in all lists scores higher than one in a single list (given comparable raw scores). | Status: done
+- [x] **Test CombMNZ equals CombSUM times count** — Verify CombMNZ = CombSUM_score * number_of_lists_containing_document. | Status: done
+- [x] **Test CombMNZ multiplier** — Verify a document in 3/3 lists with sum S scores 3S, while a document in 1/3 lists with the same sum scores 1S. | Status: done
 - [ ] **Test Borda score for rank 1** — Verify rank 1 in a list of N items receives N-1 points. | Status: not_done
 - [ ] **Test Borda score for last rank** — Verify the last-ranked item receives 0 points. | Status: not_done
-- [ ] **Test Borda absent documents with worst-rank** — Verify absent documents receive `N - (N + 1) = -1` points. | Status: not_done
+- [x] **Test Borda absent documents with worst-rank** — Verify absent documents receive `N - (N + 1) = -1` points. | Status: done
 
 ---
 
 ## Phase 11: Unit Tests — Deduplication and Metadata
 
-- [ ] **Test deduplication: one FusedResult per unique ID** — Verify a document appearing in 3 lists produces exactly 1 FusedResult. | Status: not_done
-- [ ] **Test idField option** — Verify `idField: 'documentId'` uses that field for deduplication instead of `id`. | Status: not_done
+- [x] **Test deduplication: one FusedResult per unique ID** — Verify a document appearing in 3 lists produces exactly 1 FusedResult. | Status: done
+- [x] **Test idField option** — Verify `idField: 'documentId'` uses that field for deduplication instead of `id`. | Status: done
 - [ ] **Test missing ID field throws** — Verify items without the specified ID field throw a meaningful error. | Status: not_done
-- [ ] **Test metadataMerge: first** — Verify metadata from the first list containing the document is used. | Status: not_done
-- [ ] **Test metadataMerge: deep** — Verify deep-merging of metadata from all appearances, with later values overriding. | Status: not_done
-- [ ] **Test metadataMerge: all** — Verify metadata is stored as an array of all metadata objects from all appearances. | Status: not_done
+- [x] **Test metadataMerge: first** — Verify metadata from the first list containing the document is used. | Status: done
+- [x] **Test metadataMerge: deep** — Verify deep-merging of metadata from all appearances, with later values overriding. | Status: done
+- [x] **Test metadataMerge: all** — Verify metadata is stored as an array of all metadata objects from all appearances. | Status: done
 
 ---
 
 ## Phase 12: Unit Tests — Normalization Edge Cases
 
-- [ ] **Test min-max with all identical scores** — Verify all items receive normalized score 0.5 when all scores are equal. | Status: not_done
-- [ ] **Test z-score with all identical scores** — Verify all items receive normalized score 0 when all scores are equal. | Status: not_done
-- [ ] **Test rank-based normalization with single-item list** — Verify the single item receives normalized score 1.0. | Status: not_done
+- [x] **Test min-max with all identical scores** — Verify all items receive normalized score 0.5 when all scores are equal. | Status: done
+- [x] **Test z-score with all identical scores** — Verify all items receive normalized score 0 when all scores are equal. | Status: done
+- [x] **Test rank-based normalization with single-item list** — Verify the single item receives normalized score 1.0. | Status: done
 
 ---
 
 ## Phase 13: Unit Tests — Output Normalization and Provenance
 
-- [ ] **Test normalizeOutput: true** — Verify the highest fused score maps to 1.0 and the lowest to 0.0 in the final output. | Status: not_done
-- [ ] **Test normalizeOutput: false** — Verify raw fused scores are preserved without normalization. | Status: not_done
-- [ ] **Test provenance: sources array has one entry per contributing list** — Verify each FusedResult's `sources` array has the correct number of entries. | Status: not_done
-- [ ] **Test provenance: sources[i].rank matches document rank** — Verify each source entry's rank matches the document's rank in that input list. | Status: not_done
+- [x] **Test normalizeOutput: true** — Verify the highest fused score maps to 1.0 and the lowest to 0.0 in the final output. | Status: done
+- [x] **Test normalizeOutput: false** — Verify raw fused scores are preserved without normalization. | Status: done
+- [x] **Test provenance: sources array has one entry per contributing list** — Verify each FusedResult's `sources` array has the correct number of entries. | Status: done
+- [x] **Test provenance: sources[i].rank matches document rank** — Verify each source entry's rank matches the document's rank in that input list. | Status: done
 - [ ] **Test provenance: sources[i].score matches raw score** — Verify each source entry's score matches the raw score from that list. | Status: not_done
 - [ ] **Test provenance: sources[i].normalizedScore** — Verify normalized scores are recorded in provenance for score-based strategies. | Status: not_done
 
@@ -161,13 +161,13 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 ## Phase 14: Unit Tests — Error Handling
 
-- [ ] **Test TOO_FEW_LISTS error** — Verify error when fewer than 2 lists are provided (0 lists, 1 list). | Status: not_done
-- [ ] **Test EMPTY_LIST error** — Verify error when one or more lists are empty arrays. | Status: not_done
+- [x] **Test TOO_FEW_LISTS error** — Verify error when fewer than 2 lists are provided (0 lists, 1 list). | Status: done
+- [x] **Test EMPTY_LIST error** — Verify error when one or more lists are empty arrays. | Status: done
 - [ ] **Test MISSING_SCORES error** — Verify error when using a score-based strategy (weighted, combsum, combmnz) with items that lack scores. | Status: not_done
-- [ ] **Test WEIGHT_LENGTH_MISMATCH error** — Verify error when weights array length does not match the number of result lists. | Status: not_done
-- [ ] **Test INVALID_K error** — Verify error when k is 0 or negative. | Status: not_done
+- [x] **Test WEIGHT_LENGTH_MISMATCH error** — Verify error when weights array length does not match the number of result lists. | Status: done
+- [x] **Test INVALID_K error** — Verify error when k is 0 or negative. | Status: done
 - [ ] **Test INVALID_WEIGHTS error** — Verify error when weights contain non-positive values. | Status: not_done
-- [ ] **Test MISSING_CUSTOM_FN error** — Verify error when strategy is 'custom' but no `customFusion` function is provided. | Status: not_done
+- [x] **Test MISSING_CUSTOM_FN error** — Verify error when strategy is 'custom' but no `customFusion` function is provided. | Status: done
 
 ---
 
@@ -175,7 +175,7 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 
 - [ ] **Test end-to-end RRF with 3 lists of 50 items** — Fuse 3 lists with known overlap patterns. Verify top-10 contains documents that rank highly across multiple lists. | Status: not_done
 - [ ] **Test end-to-end weighted fusion with dominant weight** — Fuse 2 lists with weights [0.8, 0.2]. Verify the ranking is dominated by the heavily-weighted list. | Status: not_done
-- [ ] **Test createFuser round-trip** — Create a fuser, fuse multiple independent query results, verify each call is independent (no state leakage between calls). | Status: not_done
+- [x] **Test createFuser round-trip** — Create a fuser, fuse multiple independent query results, verify each call is independent (no state leakage between calls). | Status: done
 - [ ] **Test large-scale fusion** — Fuse 5 lists of 1000 items each. Verify correctness against a naive reference implementation. Verify completion within performance targets (<5ms). | Status: not_done
 - [ ] **Test CLI end-to-end with stdin** — Pipe JSON through the CLI binary via stdin. Verify stdout matches the expected fused output. | Status: not_done
 - [ ] **Test CLI end-to-end with file arguments** — Provide file paths as CLI arguments. Verify output matches expected fused result. | Status: not_done
@@ -183,7 +183,7 @@ This file tracks all tasks required to implement the `fusion-rank` package per S
 - [ ] **Test CLI --pretty flag** — Verify JSON output is pretty-printed with indentation. | Status: not_done
 - [ ] **Test CLI exit code 1 on fusion error** — Verify exit code 1 when fusion fails (e.g., empty lists). | Status: not_done
 - [ ] **Test CLI exit code 2 on config error** — Verify exit code 2 when invalid flags are passed. | Status: not_done
-- [ ] **Test custom fusion function end-to-end** — Verify a user-supplied custom fusion function is called correctly and produces expected output. | Status: not_done
+- [x] **Test custom fusion function end-to-end** — Verify a user-supplied custom fusion function is called correctly and produces expected output. | Status: done
 
 ---
 
