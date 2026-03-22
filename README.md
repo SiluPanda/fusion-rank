@@ -3,6 +3,7 @@
 Reciprocal Rank Fusion and multi-strategy score fusion for combining results from multiple retrievers. Zero runtime dependencies.
 
 [![npm version](https://img.shields.io/npm/v/fusion-rank.svg)](https://www.npmjs.com/package/fusion-rank)
+[![npm downloads](https://img.shields.io/npm/dt/fusion-rank.svg)](https://www.npmjs.com/package/fusion-rank)
 [![license](https://img.shields.io/npm/l/fusion-rank.svg)](https://github.com/SiluPanda/fusion-rank/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/fusion-rank.svg)](https://nodejs.org/)
 [![types](https://img.shields.io/npm/types/fusion-rank.svg)](https://www.npmjs.com/package/fusion-rank)
