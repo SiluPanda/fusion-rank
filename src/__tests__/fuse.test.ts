@@ -142,6 +142,30 @@ describe('fuse', () => {
       expect(results[1].id).toBe('b');
       expect(results[2].id).toBe('c');
     });
+
+    it('applies defaultScore for documents missing from some lists', () => {
+      const list1 = makeList(
+        { id: 'a', score: 10, rank: 1 },
+        { id: 'b', score: 5, rank: 2 },
+      );
+      const list2 = makeList(
+        { id: 'a', score: 8, rank: 1 },
+        // 'b' is missing from list2
+      );
+
+      const results = fuse([list1, list2], {
+        strategy: 'combsum',
+        normalizeOutput: false,
+        missingDocStrategy: 'default-score',
+        defaultScore: 0.5,
+      });
+
+      const bResult = results.find(r => r.id === 'b')!;
+      // b appears in list1 only. After min-max norm in list1: b=0.0
+      // Missing from list2: gets defaultScore 0.5
+      // CombSUM(b) = 0.0 + 0.5 = 0.5
+      expect(bResult.score).toBeCloseTo(0.5, 5);
+    });
   });
 
   describe('CombMNZ strategy', () => {
@@ -181,6 +205,30 @@ describe('fuse', () => {
       // all: 2 * (1.0 + 1.0) = 4.0
       // one: 1 * 0.0 = 0.0
       expect(allResult.score).toBeGreaterThan(oneResult.score);
+    });
+
+    it('applies defaultScore for documents missing from some lists', () => {
+      const list1 = makeList(
+        { id: 'a', score: 10, rank: 1 },
+        { id: 'b', score: 5, rank: 2 },
+      );
+      const list2 = makeList(
+        { id: 'a', score: 8, rank: 1 },
+        // 'b' is missing from list2
+      );
+
+      const results = fuse([list1, list2], {
+        strategy: 'combmnz',
+        normalizeOutput: false,
+        missingDocStrategy: 'default-score',
+        defaultScore: 0.5,
+      });
+
+      const bResult = results.find(r => r.id === 'b')!;
+      // b appears in 1 list. After norm: b=0.0 in list1
+      // Missing from list2: gets defaultScore 0.5 added to sum
+      // CombMNZ(b) = 1 * (0.0 + 0.5) = 0.5
+      expect(bResult.score).toBeCloseTo(0.5, 5);
     });
   });
 
