@@ -18,11 +18,11 @@ export function computeScore(
     case 'borda':
       return bordaScore(doc, totalLists, listLengths, options.missingDocStrategy ?? 'worst-rank');
     case 'combsum':
-      return combSumScore(doc);
+      return combSumScore(doc, totalLists, options.defaultScore ?? 0, options.missingDocStrategy ?? 'default-score');
     case 'combmnz':
-      return combMnzScore(doc);
+      return combMnzScore(doc, totalLists, options.defaultScore ?? 0, options.missingDocStrategy ?? 'default-score');
     case 'weighted':
-      return combSumScore(doc);
+      return combSumScore(doc, totalLists, options.defaultScore ?? 0, options.missingDocStrategy ?? 'default-score');
     case 'custom':
       if (options.customFusion) {
         return options.customFusion(doc.id, doc.appearances, context);
