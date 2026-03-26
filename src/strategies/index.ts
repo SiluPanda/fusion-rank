@@ -21,8 +21,26 @@ export function computeScore(
       return combSumScore(doc, totalLists, options.defaultScore ?? 0, options.missingDocStrategy ?? 'default-score');
     case 'combmnz':
       return combMnzScore(doc, totalLists, options.defaultScore ?? 0, options.missingDocStrategy ?? 'default-score');
-    case 'weighted':
-      return combSumScore(doc, totalLists, options.defaultScore ?? 0, options.missingDocStrategy ?? 'default-score');
+    case 'weighted': {
+      const defaultScoreVal = options.defaultScore ?? 0;
+      const missingStrat = options.missingDocStrategy ?? 'default-score';
+      const sum = doc.appearances.reduce((s, app) => s + (app.normalizedScore ?? 0), 0);
+      if (missingStrat === 'default-score' && context.normalizedWeights) {
+        const presentListIndices = new Set(doc.appearances.map(a => a.listIndex));
+        let missingWeightedDefault = 0;
+        for (let i = 0; i < totalLists; i++) {
+          if (!presentListIndices.has(i)) {
+            missingWeightedDefault += defaultScoreVal * context.normalizedWeights[i];
+          }
+        }
+        return sum + missingWeightedDefault;
+      }
+      if (missingStrat === 'default-score') {
+        const missingCount = totalLists - doc.appearances.length;
+        return sum + missingCount * defaultScoreVal;
+      }
+      return sum;
+    }
     case 'custom':
       if (options.customFusion) {
         return options.customFusion(doc.id, doc.appearances, context);

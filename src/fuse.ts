@@ -110,6 +110,12 @@ export function fuse(resultLists: RankedItem[][], options: Partial<FuseOptions> 
     options: resolvedOptions,
   };
 
+  // Pass normalized weights through for weighted strategy scoring
+  if (strategy === 'weighted' && options.weights) {
+    const weightSum = options.weights.reduce((s, w) => s + w, 0);
+    context.normalizedWeights = options.weights.map(w => w / weightSum);
+  }
+
   // Compute scores
   const results: FusedResult[] = [];
   for (const doc of docs.values()) {
