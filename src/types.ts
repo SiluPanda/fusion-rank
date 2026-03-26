@@ -32,6 +32,8 @@ export interface FusionContext {
   totalLists: number;
   listLengths: number[];
   options: FuseOptions;
+  /** Normalized weights per list (sum to 1.0), set when strategy is 'weighted'. */
+  normalizedWeights?: number[];
 }
 
 export type CustomFusionFn = (

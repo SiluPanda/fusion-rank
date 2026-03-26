@@ -1,6 +1,6 @@
 {
   "name": "fusion-rank",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Reciprocal Rank Fusion for combining multiple retriever results",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

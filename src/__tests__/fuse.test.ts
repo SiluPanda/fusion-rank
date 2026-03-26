@@ -485,6 +485,38 @@ describe('weightedFuse', () => {
     }
   });
 
+  it('weights defaultScore by list weight for missing docs', () => {
+    // list1 has both 'a' and 'b'; list2 has only 'a'
+    // weights: list1=0.9, list2=0.1 (normalized)
+    // 'b' is missing from list2, so its defaultScore should be weighted by 0.1
+    const list1 = makeList(
+      { id: 'a', score: 10, rank: 1 },
+      { id: 'b', score: 5, rank: 2 },
+    );
+    const list2 = makeList(
+      { id: 'a', score: 8, rank: 1 },
+      // 'b' missing from list2
+    );
+
+    const results = weightedFuse([list1, list2], [0.9, 0.1], {
+      normalizeOutput: false,
+      missingDocStrategy: 'default-score',
+      defaultScore: 0.5,
+    });
+
+    const bResult = results.find(r => r.id === 'b')!;
+    // After min-max norm in list1: b=0.0 (lowest score), a=1.0
+    // After weighting present scores: b in list1 = 0.0 * 0.9 = 0.0
+    // Missing from list2: defaultScore * weight_list2 = 0.5 * 0.1 = 0.05
+    // Total for b = 0.0 + 0.05 = 0.05
+    expect(bResult.score).toBeCloseTo(0.05, 5);
+
+    // Verify this differs from unweighted defaultScore behavior:
+    // Without the fix, b would get 0.0 + 0.5 * 1.0 = 0.5
+    // With the fix, b gets 0.0 + 0.5 * 0.1 = 0.05
+    expect(bResult.score).not.toBeCloseTo(0.5, 1);
+  });
+
   it('auto-normalizes weights to sum to 1.0', () => {
     const list1 = makeList({ id: 'a', score: 10, rank: 1 }, { id: 'b', score: 5, rank: 2 });
     const list2 = makeList({ id: 'a', score: 8, rank: 1 }, { id: 'b', score: 3, rank: 2 });
